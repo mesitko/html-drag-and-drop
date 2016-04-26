@@ -1,0 +1,29 @@
+#dropArea{
+    
+    background-color:#aaa;
+
+    
+
+    width:300px;
+    padding:50px;
+    border-radius:5px;
+
+    margin:50px auto 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#imagesArea{
+    
+    background-color:#aaa;    
+
+    width:500px;
+    padding:50px;
+    border-radius:5px;
+
+    margin:50px auto 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+ul{
+    list-style: outside none none;
+}

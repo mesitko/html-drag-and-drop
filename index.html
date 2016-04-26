@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Michal Sitko - Billennium Recrutation Test</title>		
+		
+		<link href="assets/css/style.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<!-- drag and drop area -->		
+		<div id="dropArea" >
+				Image files (.jpg, .png) can be droped here
+
+				<a>Browse from your machine</a>
+				<input type="file"  id="uploadInput" multiple onchange="loadFiles('uploadInput');" accept="image/x-png, image/jpeg"/>
+		</div>
+		
+		<div id="imagesArea">
+			<ul id="imagesList">
+				<!-- Place for adding images thumbnails -->
+				
+			</ul>
+		</div>		
+		
+		<!-- scripts thats logic is separated from current html -->
+		<script src="assets/js/script.js"></script>
+		
+		<!-- parts of logic with references to current html -->
+		<script>
+			
+			// create file manager to handle files
+			var filesManager = new FilesManager("uploadInput", "dropArea", processDroppedFileHandler);
+			
+			
+			// after selecting file through input-file element call method from /files manager/
+			function loadFiles(source){
+				filesManager.LoadFiles(source);
+			}
+			
+			
+			// add file data to current html
+			// (generate thumbnail 150x150 and add link)
+			function processDroppedFileHandler(){
+				var li = document.createElement("li");
+  				var imageId = "img"+ generateId();  
+  				li.innerHTML = '<a target="_blank" href="{results}"><canvas id="{imageId}"></canvas></a>'/*.replace("{filename}", this.FileName)*/.replace("{results}", this.result).replace("{imageId}", imageId);
+  				document.getElementById("imagesList").appendChild(li);  
+   
+  				var canvas = document.getElementById(imageId);
+  				var image = document.createElement('img'); 
+  				image.src = this.result;
+ 
+ 
+ 				var MAX_WIDTH = 150;
+				var MAX_HEIGHT = 150;
+				var width = image.width;
+				var height = image.height;
+ 
+				if (width > height) {
+  					if (width > MAX_WIDTH) {
+    					height *= MAX_WIDTH / width;
+    					width = MAX_WIDTH;
+  					}
+				} else {
+  					if (height > MAX_HEIGHT) {
+    					width *= MAX_HEIGHT / height;
+    					height = MAX_HEIGHT;
+  					}
+				}
+				canvas.width = MAX_WIDTH;// width;
+				canvas.height = MAX_HEIGHT;// height;
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(image, 0, 0, width, height);
+			};
+			
+			//generate custom id for canvas
+			function generateId(){
+    			function s4() {
+        			return Math.floor((1 + Math.random()) * 0x10000)
+          			.toString(16)
+          			.substring(1);
+      			}
+    			return s4() + s4();
+  			};  
+		</script>
+		
+		
+		
+	</body>
+</html>
